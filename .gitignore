@@ -1,0 +1,9 @@
+#### Ignore Object Files ####
+*.o
+
+####   Ignore Vim Swap   ####
+.*.sw?
+
+####  Ignore Build Dir   ####
+/build/**
+/debug/**
