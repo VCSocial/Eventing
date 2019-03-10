@@ -2,17 +2,18 @@ SHELL := /bin/bash
 CC ?= gcc
 LD ?= gcc
 
-SRCDIR = ./src
-OBJDIR = ./obj
-
+SRCDIR = src
+OBJDIR = obj
 BUILD := debug
 BUILD_DIR := ${CURDIR}/${BUILD}
+
 CFLAGS := ${CFLAGS} -std=gnu99 -pedantic -Werror -Wall -Wextra -Wcast-align\
 	-Wcast-qual -Wdisabled-optimization -Wformat=2 -Winit-self\
 	-Wmissing-include-dirs -Wredundant-decls -Wshadow\
 	-Wstrict-overflow=5 -Wundef -fdiagnostics-show-option -Wconversion -g
 CLFAGS.debug := ${CFLAGS} -O0 -fstack-protector-all -g
 CLFAGS.release := ${CFLAGS} -O3 -DNDEBUG
+LDFLAGS := -lm
 
 BINARY := $(BUILD_DIR)/eventing
 
@@ -30,24 +31,31 @@ else
 endif
 
 SRCS = $(sort $(wildcard $(SRCDIR)/*.c)) 
-OBJS = $(SRCS:.c=.o)
+OBJS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
+#OBJS = $(OBJDIR)/$(notdir $(SRCS:%.c=%.o))
 
-all: $(BUILD_DIR) $(SRCS) $(BINARY)
+#OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
+#OBJS = $(SRCS:.c=.o)
+
+
+all: $(BINARY)
+
+build: $(BINARY)
 
 $(BINARY): $(OBJS)
-	$(CC) $(CFLAGS.debug) $(OBJS) -o $@
-.o:
-	$(CC) $(CFLAGS.debug) $< -o $@ 
+	@echo "Building binary"
+	@mkdir -p $(BUILD_DIR)
+	@$(CC) $(LDFLAGS) -o $@ $+
 
-# Make build dir
-${BUILD_DIR}:
-	mkdir $@
+$(OBJS) : $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@echo Compiling $<
+	@mkdir -p $(OBJDIR)
+	@$(CC) $(CFLAGS.debug) -c $< -o $@
 
 run: $(BINARY)
 	$(BINARY)
-	
 
-.PHONEY = clean
+.PHONEY: build clean
 clean:
-	rm -rf ${BUILD_DIR}
-	rm -rf $(SRCDIR)/*.o
+	rm -rf $(BUILD_DIR)
+	rm -rf $(OBJDIR)
