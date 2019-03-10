@@ -6,4 +6,5 @@
 
 ####  Ignore Build Dir   ####
 /build/**
+/obj/**
 /debug/**
