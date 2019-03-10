@@ -13,6 +13,10 @@ unsigned int create_event(char desc[], char * begin, char * end)
 
     repository[auto_inc++] = new_event; 
 
+    if (repository[new_event->id] == NULL  || repository[new_event->id == 0]) {
+      return 0;
+    }
+
     return new_event->id; // Return the id of the stored event
 }
 

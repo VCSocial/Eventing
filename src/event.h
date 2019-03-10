@@ -27,7 +27,7 @@ struct event {
 
 /* Variables */
 static struct event *repository[MAX_EVENTS] = {0};
-static unsigned int auto_inc = 0;
+static unsigned int auto_inc = 1;
 
 /* Functions */
 unsigned int create_event(char desc[], char * begin, char * end);
