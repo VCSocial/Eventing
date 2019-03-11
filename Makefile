@@ -7,12 +7,19 @@ OBJDIR = obj
 BUILD := debug
 BUILD_DIR := ${CURDIR}/${BUILD}
 
+TEST := test
+TEST_DIR := ${CURDIR}/${TEST}
+
+BUILD_TEST_DIR := ${BUILD_DIR}/${TEST}
+
 CFLAGS := ${CFLAGS} -std=gnu99 -pedantic -Werror -Wall -Wextra -Wcast-align\
 	-Wcast-qual -Wdisabled-optimization -Wformat=2 -Winit-self\
 	-Wmissing-include-dirs -Wredundant-decls -Wshadow\
-	-Wstrict-overflow=5 -Wundef -fdiagnostics-show-option -Wconversion -g
+	-Wstrict-overflow=5 -Wundef -fdiagnostics-show-option -Wconversion -g\
+	${INC_PARAMS}
 CLFAGS.debug := ${CFLAGS} -O0 -fstack-protector-all -g
 CLFAGS.release := ${CFLAGS} -O3 -DNDEBUG
+TEST_FLAGS := -lcriterion
 LDFLAGS := -lm
 
 BINARY := $(BUILD_DIR)/eventing
@@ -32,30 +39,35 @@ endif
 
 SRCS = $(sort $(wildcard $(SRCDIR)/*.c)) 
 OBJS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
-#OBJS = $(OBJDIR)/$(notdir $(SRCS:%.c=%.o))
+TSTS = $(filter-out $(TEST_DIR)/unit_main.c, $(patsubst $(SRCDIR)/%.c,$(TEST_DIR)/unit_%.c,$(SRCS)))
+TST_SRCS = $(filter-out $(SRCDIR)/main.c, $(SRCS))
+TST_BINS = $(patsubst $(TEST_DIR)/%.c,$(BUILD_TEST_DIR)/%,$(TSTS))
 
-#OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
-#OBJS = $(SRCS:.c=.o)
+all: $(BINARY) $(TST_BINS)
+test: $(TST_BINS)
 
 
-all: $(BINARY)
-
-build: $(BINARY)
-
-$(BINARY): $(OBJS)
+$(BINARY): $(OBJS) 
 	@echo "Building binary"
 	@mkdir -p $(BUILD_DIR)
 	@$(CC) $(LDFLAGS) -o $@ $+
 
-$(OBJS) : $(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo Compiling $<
 	@mkdir -p $(OBJDIR)
 	@$(CC) $(CFLAGS.debug) -c $< -o $@
 
-run: $(BINARY)
-	$(BINARY)
+$(TST_BINS): $(TSTS) $(TST_SRCS) 
+	@echo Running all tests
+	@mkdir -p $(BUILD_TEST_DIR)
+	@$(CC) $(TEST_FLAGS) $+ -o $@
+	@$@
 
-.PHONEY: build clean
+run: $(BINARY) $(TST_BINS)
+	$(BINARY)
+	$(TST_BINS)
+
+.PHONEY: clean
 clean:
 	rm -rf $(BUILD_DIR)
 	rm -rf $(OBJDIR)
