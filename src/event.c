@@ -42,7 +42,7 @@ time_t convert_to_unix_time(char * time_str)
             timestamp > 0);
 
     return timestamp;
-}
+}  
 
 void print_event(unsigned int id) 
 {
