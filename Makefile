@@ -43,7 +43,7 @@ TSTS = $(filter-out $(TEST_DIR)/unit_main.c, $(patsubst $(SRCDIR)/%.c,$(TEST_DIR
 TST_SRCS = $(filter-out $(SRCDIR)/main.c, $(SRCS))
 TST_BINS = $(patsubst $(TEST_DIR)/%.c,$(BUILD_TEST_DIR)/%,$(TSTS))
 
-all: $(BINARY) $(TST_BINS)
+all: $(BINARY) $(TST_BINS) run_tests
 test: $(TST_BINS)
 
 
@@ -61,10 +61,12 @@ $(TST_BINS): $(TSTS) $(TST_SRCS)
 	@echo Running all tests
 	@mkdir -p $(BUILD_TEST_DIR)
 	@$(CC) $(TEST_FLAGS) $+ -o $@
-	@$@
 
 run: $(BINARY) $(TST_BINS)
 	$(BINARY)
+	$(TST_BINS)
+
+run_tests: $(TST_BINS)
 	$(TST_BINS)
 
 .PHONEY: clean
