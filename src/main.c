@@ -4,7 +4,8 @@
 int main () 
 {
     unsigned int id = create_event("Test Desc 0", "08:00", "08:05");
-
+    print_event(id);
+    delete_event(id);
     print_event(id);
 
     return 0;

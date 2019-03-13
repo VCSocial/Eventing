@@ -23,6 +23,20 @@ unsigned int create_event(char desc[], char * begin, char * end)
     return new_event->id; // Return the id of the stored event
 }
 
+unsigned int delete_event(unsigned int id)
+{
+  if (repository[id] == NULL) {
+    info(__FUNCTION__, __FILE__, "Trying to delete event not in repository");
+    return 1;
+  }
+
+  free(repository[id]);
+  repository[id] = NULL;
+
+  info(__FUNCTION__, __FILE__, "Deleted event");
+  return 0; 
+}
+
 time_t convert_to_unix_time(char * time_str) 
 {
     struct tm tm;
@@ -50,6 +64,10 @@ time_t convert_to_unix_time(char * time_str)
 void print_event(unsigned int id)
 {
    struct event *requested = repository[id];
+   if (requested == NULL) {
+     warn(__FUNCTION__, __FILE__, "Trying to print event not in repository");
+     return;
+   }
    printf("===============================================================\n");
    printf("| %-11s | %d\n", "ID", id);
    printf("| %-10s | %s\n", "Description", requested->desc);
