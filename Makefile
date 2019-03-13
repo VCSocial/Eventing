@@ -46,7 +46,6 @@ TST_BINS = $(patsubst $(TEST_DIR)/%.c,$(BUILD_TEST_DIR)/%,$(TSTS))
 all: $(BINARY) $(TST_BINS) run_tests
 test: $(TST_BINS)
 
-
 $(BINARY): $(OBJS) 
 	@echo "Building binary"
 	@mkdir -p $(BUILD_DIR)
@@ -62,9 +61,8 @@ $(TST_BINS): $(TSTS) $(TST_SRCS)
 	@mkdir -p $(BUILD_TEST_DIR)
 	@$(CC) $(TEST_FLAGS) $+ -o $@
 
-run: $(BINARY) $(TST_BINS)
+run: $(BINARY) 
 	$(BINARY)
-	$(TST_BINS)
 
 run_tests: $(TST_BINS)
 	$(TST_BINS)

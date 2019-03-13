@@ -10,6 +10,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
+#include "logger.h"
 
 /* Macros */
 #define assertf(msg, expr) assert(((void) (msg), (expr) ))
@@ -34,4 +35,4 @@ unsigned int create_event(char desc[], char * begin, char * end);
 time_t convert_to_unix_time(char * time_str);
 void print_event(unsigned int id);
 
-#endif
+#endif /* END EVENT_H */
