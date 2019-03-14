@@ -16,7 +16,7 @@ CFLAGS := ${CFLAGS} -std=gnu99 -pedantic -Werror -Wall -Wextra -Wcast-align\
 	-Wcast-qual -Wdisabled-optimization -Wformat=2 -Winit-self\
 	-Wmissing-include-dirs -Wredundant-decls -Wshadow\
 	-Wstrict-overflow=5 -Wundef -fdiagnostics-show-option -Wconversion -g\
-	${INC_PARAMS}
+	-luuid
 CLFAGS.debug := ${CFLAGS} -O0 -fstack-protector-all -g
 CLFAGS.release := ${CFLAGS} -O3 -DNDEBUG
 TEST_FLAGS := -lcriterion

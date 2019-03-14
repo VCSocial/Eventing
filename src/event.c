@@ -2,38 +2,38 @@
 
 unsigned int create_event(char desc[], char * begin, char * end)
 {
-    struct event *new_event = (struct event *)
-        malloc(sizeof(struct event));
+  struct event *new_event = (struct event *)
+    malloc(sizeof(struct event));
 
-    new_event->id = auto_inc;
-    new_event->desc = strdup(desc);
-    new_event->begin = convert_to_unix_time(begin);
-    new_event->end   = convert_to_unix_time(end);
-    new_event->duration = difftime(new_event->end, new_event->begin);
+  new_event->uuid = uuid;
+  new_event->id = auto_inc;
+  new_event->desc = strdup(desc);
+  new_event->begin = convert_to_unix_time(begin);
+  new_event->end   = convert_to_unix_time(end);
+  new_event->duration = difftime(new_event->end, new_event->begin);
 
-    repository[auto_inc++] = new_event;
+  repository[auto_inc++] = new_event;
 
-    if (repository[new_event->id] == NULL  || repository[new_event->id == 0]) {
-      erro(__FUNCTION__, __FILE__, "Failed to create new event");
-      return 0;
-    }
+  if (repository[new_event->id] == NULL  || repository[new_event->id == 0]) {
+    logger(__FUNCTION__, __FILE__, 2,"Failed to create new event");
+    return 0;
+  }
 
-    // TODO Safely add the id to the message passed
-    info(__FUNCTION__, __FILE__, "Created new event");
-    return new_event->id; // Return the id of the stored event
+  logger(__FUNCTION__, __FILE__, 0, "Created new event %d\n", new_event->id);
+  return new_event->id; // Return the id of the stored event
 }
 
 unsigned int delete_event(unsigned int id)
 {
   if (repository[id] == NULL) {
-    info(__FUNCTION__, __FILE__, "Trying to delete event not in repository");
+    logger(__FUNCTION__, __FILE__, 1, "Trying to delete event not in repository");
     return 1;
   }
 
   free(repository[id]);
   repository[id] = NULL;
 
-  info(__FUNCTION__, __FILE__, "Deleted event");
+  logger(__FUNCTION__, __FILE__, 0, "Deleted event %d", id);
   return 0; 
 }
 
@@ -65,7 +65,7 @@ void print_event(unsigned int id)
 {
    struct event *requested = repository[id];
    if (requested == NULL) {
-     warn(__FUNCTION__, __FILE__, "Trying to print event not in repository");
+     logger(__FUNCTION__, __FILE__, 1, "Trying to print event not in repository");
      return;
    }
    printf("===============================================================\n");

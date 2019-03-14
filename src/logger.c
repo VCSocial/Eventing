@@ -9,36 +9,26 @@ char * get_curr_time(void)
   now = localtime(&raw);
 
   if (strftime(buf, TIME_LEN, "%Y-%m-%d %H:%M:%S", now) == 0) {
-    printf("STUB\n");
-    // TODO Find better solution
     buf = "FAILURE\0";
   }
   return buf;
 }
 
-void info(const char * caller, const char * src, char * msg)
+void logger(const char * caller, const char * src, int lvl, const char * msg, ...)
 {
   char * time = get_curr_time();
   pid_t pid = getpid();
 
-  printf(ANSI_GREEN "%s  INFO  %ld --- [%15s] %20s : %s\n" ANSI_RESET,
-         time, (long) pid, caller, src, msg);
+  va_list arg;
+  int done;
+
+  printf("%s %s  %-5s %ld --- [%15s] %10s : ", color[lvl], time, type[lvl],
+         (long) pid, caller, src);
+
+  va_start (arg, msg);
+  done = vfprintf (stdout, msg, arg);
+  va_end (arg);
+
+  printf(ANSI_RESET "\n");
 }
 
-void warn(const char * caller, const char * src, char * msg)
-{
-  char * time = get_curr_time();
-  pid_t pid = getpid();
-
-  printf(ANSI_YELLOW "%s  WARN  %ld --- [%15s] %20s : %s\n" ANSI_RESET,
-         time, (long) pid, caller, src, msg);
-}
-
-void erro(const char * caller, const char * src, char * msg)
-{
-  char * time = get_curr_time();
-  pid_t pid = getpid();
-
-  printf(ANSI_RED "%s  ERROR %ld --- [%15s] %20s : %s\n" ANSI_RESET,
-         time, (long) pid, caller, src, msg);
-}

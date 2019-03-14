@@ -10,20 +10,25 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdarg.h>
 
 /* Constants */
 #define TIME_LEN 26
-#define ANSI_RED     "\x1b[31m"
 #define ANSI_GREEN   "\x1b[32m"
 #define ANSI_YELLOW  "\x1b[33m"
-#define ANSI_BLUE    "\x1b[34m"
-#define ANSI_MAGENTA "\x1b[35m"
-#define ANSI_CYAN    "\x1b[36m"
+#define ANSI_RED     "\x1b[31m"
 #define ANSI_RESET   "\x1b[0m"
+#define INFO         0
+#define WARN         0
+#define ERROR        0
+#define LOG_TYPE_LEN 3
 
+/* Global variables */
+static char * type[LOG_TYPE_LEN]  = {"INFO", "WARN", "ERROR"};
+static char * color[LOG_TYPE_LEN] = {ANSI_GREEN, ANSI_YELLOW, ANSI_RED};
+
+/* Prototypes */
 char * get_curr_time(void);
-void info(const char * caller, const char * src, char * msg);
-void warn(const char * caller, const char * src, char * msg);
-void erro(const char * caller, const char * src, char * msg);
+void logger(const char * caller, const char * src, int lvl, const char * msg, ...);
 
 #endif /* END LOGGER_H */

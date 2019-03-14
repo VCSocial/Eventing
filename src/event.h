@@ -17,8 +17,10 @@
 
 /* Constants */
 #define MAX_EVENTS 256
+#define UUID_LEN   37
 
 struct event {
+  char * uuid;
   unsigned int id;
   char * desc;
   time_t begin;
@@ -34,5 +36,6 @@ static unsigned int auto_inc = 1;
 unsigned int create_event(char desc[], char * begin, char * end);
 time_t convert_to_unix_time(char * time_str);
 void print_event(unsigned int id);
+unsigned int delete_event(unsigned int id);
 
 #endif /* END EVENT_H */
