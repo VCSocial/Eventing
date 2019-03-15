@@ -23,9 +23,9 @@
 #define ERROR        0
 #define LOG_TYPE_LEN 3
 
-/* Global variables */
-static char * type[LOG_TYPE_LEN]  = {"INFO", "WARN", "ERROR"};
-static char * color[LOG_TYPE_LEN] = {ANSI_GREEN, ANSI_YELLOW, ANSI_RED};
+/* Global Variables */
+extern char * type[LOG_TYPE_LEN];
+extern char * color[LOG_TYPE_LEN];
 
 /* Prototypes */
 char * get_curr_time(void);

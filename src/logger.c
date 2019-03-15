@@ -1,5 +1,9 @@
 #include "logger.h"
 
+/* Variables */
+char * type[LOG_TYPE_LEN] = {"INFO", "WARN", "ERROR"};
+char * color[LOG_TYPE_LEN] = {ANSI_GREEN, ANSI_YELLOW, ANSI_RED};
+
 char * get_curr_time(void)
 {
   char * buf = (char *) malloc(sizeof(char) * TIME_LEN);
@@ -26,7 +30,9 @@ void logger(const char * caller, const char * src, int lvl, const char * msg, ..
          (long) pid, caller, src);
 
   va_start (arg, msg);
-  done = vfprintf (stdout, msg, arg);
+  if ((done = vfprintf (stdout, msg, arg)) < 0) {
+    printf("%s Failure to parse logged message", color[lvl]);
+  }
   va_end (arg);
 
   printf(ANSI_RESET "\n");

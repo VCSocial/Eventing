@@ -28,9 +28,9 @@ struct event {
   time_t end;
 };
 
-/* Variables */
-static struct event *repository[MAX_EVENTS] = {0};
-static unsigned int auto_inc = 1;
+/* Global Variables */
+extern struct event *repository[MAX_EVENTS];
+extern unsigned int auto_inc;
 
 /* Functions */
 unsigned int create_event(char desc[], char * begin, char * end);
@@ -38,4 +38,4 @@ time_t convert_to_unix_time(char * time_str);
 void print_event(unsigned int id);
 unsigned int delete_event(unsigned int id);
 
-#endif /* END EVENT_H */
+#endif /* END EVENT_H *c generate uuid */

@@ -15,8 +15,7 @@ BUILD_TEST_DIR := ${BUILD_DIR}/${TEST}
 CFLAGS := ${CFLAGS} -std=gnu99 -pedantic -Werror -Wall -Wextra -Wcast-align\
 	-Wcast-qual -Wdisabled-optimization -Wformat=2 -Winit-self\
 	-Wmissing-include-dirs -Wredundant-decls -Wshadow\
-	-Wstrict-overflow=5 -Wundef -fdiagnostics-show-option -Wconversion -g\
-	-luuid
+	-Wstrict-overflow=5 -Wundef -fdiagnostics-show-option -Wconversion -g -luuid
 CLFAGS.debug := ${CFLAGS} -O0 -fstack-protector-all -g
 CLFAGS.release := ${CFLAGS} -O3 -DNDEBUG
 TEST_FLAGS := -lcriterion
@@ -54,7 +53,7 @@ $(BINARY): $(OBJS)
 $(OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo Compiling $<
 	@mkdir -p $(OBJDIR)
-	@$(CC) $(CFLAGS.debug) -c $< -o $@
+	@$(CC) ${CFLAGS} -c $< -o $@
 
 $(TST_BINS): $(TSTS) $(TST_SRCS) 
 	@echo Running all tests
