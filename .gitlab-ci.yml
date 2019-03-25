@@ -1,0 +1,8 @@
+before_script:
+  - apt-get update -qq && apt-get install -y -qq clang gcc
+  
+build:
+  script:
+    - make CC=clang
+
+
