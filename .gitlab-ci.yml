@@ -1,8 +1,16 @@
+image: gcc
+
 before_script:
   - apt-get update -qq && apt-get install -y -qq clang gcc
-  
+  - clang -v
+  - uname -a
+
 build:
   script:
     - make CC=clang
-
+  artifacts:
+    paths: 
+      - debug/eventing
+    expire_in: 1 week
+      
 
