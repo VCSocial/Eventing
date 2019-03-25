@@ -7,7 +7,7 @@ before_script:
 
 build:
   script:
-    - make CC=clang
+    - make CC=gcc
   artifacts:
     paths: 
       - debug/eventing
