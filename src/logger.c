@@ -1,8 +1,8 @@
 #include "logger.h"
 
 /* Variables */
-char * type[LOG_TYPE_LEN] = {"INFO", "WARN", "ERROR"};
-char * color[LOG_TYPE_LEN] = {ANSI_GREEN, ANSI_YELLOW, ANSI_RED};
+static char * type[LOG_TYPE_LEN] = {"INFO", "WARN", "ERROR"};
+static char * color[LOG_TYPE_LEN] = {ANSI_GREEN, ANSI_YELLOW, ANSI_RED};
 
 char * get_curr_time(void)
 {

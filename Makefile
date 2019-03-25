@@ -15,9 +15,9 @@ BUILD_TEST_DIR := ${BUILD_DIR}/${TEST}
 CFLAGS := ${CFLAGS} -std=gnu99 -pedantic -Werror -Wall -Wextra -Wcast-align\
 	-Wcast-qual -Wdisabled-optimization -Wformat=2 -Winit-self\
 	-Wmissing-include-dirs -Wredundant-decls -Wshadow\
-	-Wstrict-overflow=5 -Wundef -fdiagnostics-show-option -Wconversion -g -luuid
-CLFAGS.debug := ${CFLAGS} -O0 -fstack-protector-all -g
-CLFAGS.release := ${CFLAGS} -O3 -DNDEBUG
+	-Wstrict-overflow=5 -Wundef -fdiagnostics-show-option -Wconversion -g \
+	-O0 -fstack-protector-all -pthread
+CLFAGS_RELEASE := ${CFLAGS} -O3 -DNDEBUG
 TEST_FLAGS := -lcriterion
 LDFLAGS := -lm
 

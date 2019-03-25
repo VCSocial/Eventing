@@ -19,13 +19,9 @@
 #define ANSI_RED     "\x1b[31m"
 #define ANSI_RESET   "\x1b[0m"
 #define INFO         0
-#define WARN         0
-#define ERROR        0
+#define WARN         1
+#define ERRO         2
 #define LOG_TYPE_LEN 3
-
-/* Global Variables */
-extern char * type[LOG_TYPE_LEN];
-extern char * color[LOG_TYPE_LEN];
 
 /* Prototypes */
 char * get_curr_time(void);
