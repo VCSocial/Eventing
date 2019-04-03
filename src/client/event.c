@@ -4,6 +4,14 @@
 struct event *repository[MAX_EVENTS] = {0};
 unsigned int auto_inc = 1;
 
+int main ()
+{
+
+
+  return 0;
+}
+
+
 unsigned int create_event(char desc[], char * begin, char * end)
 {
   openlog ("Eventing", LOG_CONS | LOG_PERROR | LOG_PID, LOG_USER);

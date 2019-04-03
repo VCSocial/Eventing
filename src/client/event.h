@@ -11,7 +11,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <syslog.h>
-#include "logger.h"
 
 /* Macros */
 #define assertf(msg, expr) assert(((void) (msg), (expr) ))
@@ -39,4 +38,4 @@ time_t convert_to_unix_time(char * time_str);
 void print_event(unsigned int id);
 unsigned int delete_event(unsigned int id);
 
-#endif /* END EVENT_H *c generate uuid */
+#endif /* END EVENT_H */
