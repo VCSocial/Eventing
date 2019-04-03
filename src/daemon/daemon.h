@@ -13,7 +13,6 @@
 #include <string.h>
 #include <syslog.h>
 #include <signal.h>
-#include <systemd/sd-journal.h>
 
 /* Constants */
 #define MAX_EVENTS 256
