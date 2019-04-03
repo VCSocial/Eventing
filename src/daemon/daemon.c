@@ -2,15 +2,6 @@
 
 static volatile sig_atomic_t terminated = 0;
 
-void log_out(int level, const char * format, ...)
-{
-  printf ("<%d> ", level);
-  va_list args;
-  va_start(args, format);
-  vfprintf(stdout, format, args);
-  va_end(args);
-}
-
 void sigterm(int signum)
 {
   syslog (LOG_INFO, "Signal %d received", signum);
