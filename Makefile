@@ -55,7 +55,7 @@ TSTS = $(filter-out $(TEST_DIR)/unit_main.c, $(patsubst $(SRCDIR)/%.c,$(TEST_DIR
 TST_SRCS = $(filter-out $(SRCDIR)/main.c, $(SRCS))
 TST_BINS = $(patsubst $(TEST_DIR)/%.c,$(BUILD_TEST_DIR)/%,$(TSTS))
 
-all: $(BINARY) $(TST_BINS) run_tests
+all: daemon client
 test: $(TST_BINS)
 daemon: $(DAEMON_BINARY)
 client: $(CLIENT_BINARY)

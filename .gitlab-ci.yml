@@ -1,14 +1,12 @@
 image: registry.gitlab.com/middlingintereset/eventing:latest
 
 before_script:
-  - apt-get update -qq && apt-get install -y -qq clang gcc make
   - clang -v
   - uname -a
 
 build:
   script:
-    - make CC=clang daemon
-    - make CC=clang client
+    - make CC=clang
   artifacts:
     paths: 
       - debug/daemon
