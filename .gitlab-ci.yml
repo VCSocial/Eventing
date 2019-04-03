@@ -11,7 +11,8 @@ build:
     - make CC=clang client
   artifacts:
     paths: 
-      - debug/eventing
+      - debug/daemon
+      - debug/client
     expire_in: 1 week
       
 
