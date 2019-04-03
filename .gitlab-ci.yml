@@ -1,7 +1,7 @@
 image: registry.gitlab.com/middlingintereset/eventing:latest
 
 before_script:
-  - apt-get update -qq && apt-get install -y -qq clang gcc
+  - apt-get update -qq && apt-get install -y -qq clang gcc make
   - clang -v
   - uname -a
 
